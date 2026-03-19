@@ -144,7 +144,7 @@
             try {
                 let kbUrl = './knowledgebase.txt';
                 if (window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog')) {
-                    kbUrl = 'https://vtuber-3dgame.vercel.app/knowledgebase.txt';
+                    kbUrl = 'https://wenzao-ai-avatar.vercel.app/knowledgebase.txt';
                 }
                 const kbRes = await fetch(kbUrl).catch(() => null);
                 if (kbRes && kbRes.ok) {
@@ -195,7 +195,7 @@
 
             let modelUrl = './AvatarSample_W.vrm';
             if (window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog')) {
-                modelUrl = 'https://vtuber-3dgame.vercel.app/AvatarSample_W.vrm';
+                modelUrl = 'https://wenzao-ai-avatar.vercel.app/AvatarSample_W.vrm';
             }
             loadVRM(modelUrl);
             animate();
