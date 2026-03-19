@@ -411,16 +411,14 @@
             setStatus('connecting');
             conversationHistory.push({ role: "user", parts: [{ text: text }] });
 
-            const fullSystemInstruction = `${systemPromptText}\n\n【知識庫內容】\n${knowledgeBaseText}`;
-
             try {
                 const response = await fetchWithBackoff(`/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: conversationHistory,
-                        systemInstruction: { parts: [{ text: fullSystemInstruction }] },
-                        tools: [{ googleSearch: {} }]
+                        systemPrompt: systemPromptText,
+                        knowledgeBase: knowledgeBaseText
                     })
                 });
 
