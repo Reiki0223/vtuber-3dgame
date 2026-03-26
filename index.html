@@ -142,13 +142,27 @@
 
         async function loadConfig() {
             try {
-                let kbUrl = './knowledgebase.txt';
-                if (window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog')) {
-                    kbUrl = 'https://wenzao-ai-avatar.vercel.app/knowledgebase.txt';
-                }
-                const kbRes = await fetch(kbUrl).catch(() => null);
+                const isRemote = window.location.protocol === 'blob:' || window.location.hostname.includes('usercontent.goog');
+                const baseUrl = isRemote ? 'https://wenzao-ai-avatar.vercel.app' : '.';
+
+                const kbRes = await fetch(`${baseUrl}/knowledgebase.txt`).catch(() => null);
                 if (kbRes && kbRes.ok) {
                     knowledgeBaseText = await kbRes.text();
+                }
+
+                const promptRes = await fetch(`${baseUrl}/prompt.txt`).catch(() => null);
+                if (promptRes && promptRes.ok) {
+                    const promptContent = await promptRes.text();
+                    // 取「=== 提示詞 ===」之後的內容作為 systemPromptText
+                    const match = promptContent.match(/=== 提示詞 ===\s*([\s\S]*)/);
+                    if (match && match[1].trim()) {
+                        systemPromptText = match[1].trim();
+                    }
+                    // 取「=== 開場詞 ===」與「=== 提示詞 ===」之間的內容作為 openingPhrase
+                    const openingMatch = promptContent.match(/=== 開場詞 ===\s*([\s\S]*?)\s*=== 提示詞 ===/);
+                    if (openingMatch && openingMatch[1].trim()) {
+                        openingPhrase = openingMatch[1].trim();
+                    }
                 }
             } catch (error) {
                 console.warn("載入設定檔失敗", error);
@@ -342,7 +356,8 @@
                     }
 
                     if (isSpeaking) {
-                        currentVrm.expressionManager.setValue('happy', 1.0);
+                        // 使用 AI 指定的情緒，不強制覆蓋成 happy
+                        currentVrm.expressionManager.setValue(targetExpression, 1.0);
                         lipSyncTimer += delta * 15;
                         const mouthOpenness = (Math.sin(lipSyncTimer) + 1) / 2;
                         if (activeSpecialAction !== 'aa') {
@@ -647,3 +662,4 @@
     </script>
 </body>
 </html>
+
