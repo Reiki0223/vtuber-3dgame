@@ -30,20 +30,20 @@
 
     <div id="ui-layer" class="flex flex-col justify-end p-4 relative">
         
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] sm:w-full max-w-lg pointer-events-auto flex flex-col gap-3 bg-white/10 backdrop-blur-sm p-4 rounded-2xl shadow-sm border border-white/30 z-10 transition-all duration-300">
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] sm:w-full max-w-lg pointer-events-auto flex flex-col gap-3 bg-white p-4 rounded-2xl shadow-md border border-gray-200 z-10 transition-all duration-300">
             
             <div id="chat-bubble" class="hidden px-2 max-h-40 overflow-y-auto no-scrollbar">
                 <p id="chat-text" class="text-lg text-blue-900 font-medium leading-relaxed drop-shadow-sm"></p>
             </div>
 
             <div class="flex gap-2 w-full">
-                <button id="mic-btn" class="bg-white/20 hover:bg-white/30 backdrop-blur text-blue-900 px-3 py-3 rounded-xl shadow-inner border border-blue-900/10 transition-colors shrink-0 flex items-center justify-center" title="語音輸入">
+                <button id="mic-btn" class="bg-gray-100 hover:bg-gray-200 text-blue-900 px-3 py-3 rounded-xl shadow-inner border border-blue-900/10 transition-colors shrink-0 flex items-center justify-center" title="語音輸入">
                     <svg id="mic-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
                     </svg>
                 </button>
 
-                <input type="text" id="chat-input" placeholder="與41號對話..." class="flex-1 bg-white/20 text-blue-900 placeholder-blue-800/50 px-4 py-3 rounded-xl border border-blue-900/10 focus:outline-none focus:border-blue-900/30 focus:bg-white/40 shadow-inner text-base transition-colors font-medium" />
+                <input type="text" id="chat-input" placeholder="與41號對話..." class="flex-1 bg-gray-100 text-blue-900 placeholder-blue-800/50 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-300 focus:bg-white shadow-inner text-base transition-colors font-medium" />
                 <button id="send-btn" class="bg-blue-800/70 hover:bg-blue-700/80 active:scale-95 active:bg-blue-900 backdrop-blur text-white px-5 py-3 rounded-xl shadow transition-all duration-150 font-bold text-base shrink-0">發送</button>
             </div>
         </div>
@@ -588,7 +588,7 @@
 
             recognition.onstart = function() {
                 isRecording = true;
-                micBtn.classList.remove('bg-white/20', 'text-blue-900');
+                micBtn.classList.remove('bg-gray-100', 'text-blue-900');
                 micBtn.classList.add('bg-red-500/80', 'text-white', 'animate-pulse');
                 chatInput.placeholder = "聆聽中...";
                 resetSilenceTimeout();
@@ -634,7 +634,7 @@
         function resetMicUI() {
             if (!micBtn) return;
             micBtn.classList.remove('bg-red-500/80', 'text-white', 'animate-pulse');
-            micBtn.classList.add('bg-white/20', 'text-blue-900');
+            micBtn.classList.add('bg-gray-100', 'text-blue-900');
             chatInput.placeholder = "與41號對話...";
         }
 
